@@ -7,7 +7,10 @@
 ```js
 const renderEvent = event => <div>{ event }</div>
 
-<EventSource url="https://proxy.streamdata.io/https://api.bitcoinaverage.com/ticker/global/EUR/">
+<EventSource
+	url="https://proxy.streamdata.io/https://api.bitcoinaverage.com/ticker/global/EUR/"
+	onEventSourceError={console.log}
+>
     { events => events.map(renderEvent) }
 </EventSource>
 ```
@@ -15,6 +18,13 @@ const renderEvent = event => <div>{ event }</div>
 By default, EventSource will listen to `message` events.
 
 If you use custom message types, you can specify them using `types={['data', 'patch']}`
+
+You can pass your own `EventSource` using source prop `source={new EventSource(url)}`, 
+If using your own EventSource you can import module as EventSourceReactComponent instead of EventSource
+```
+import * as EventSourceReactComponent from 'react-eventsource'; // ES6
+const EventSourceReactComponent = require('react-eventsource');	// ES5 with npm
+```
 
 See working demo with Live Bitcoin value update : http://revolunet.github.io/react-eventsource/#/demo
 
