@@ -1,5 +1,6 @@
 import React from 'react';
-
+import PropTypes from 'prop-types';
+import propIsRequiredIf from 'react-proptype-conditional-require';
 
 class EventSourceHOC extends React.Component {
 
@@ -9,7 +10,7 @@ class EventSourceHOC extends React.Component {
 
   componentDidMount() {
     // connect to the EventSource
-    this.source = new EventSource(this.props.url);
+    this.source = this.props.source ? this.props.source : new EventSource(this.props.url);
     const cb = message => {
       this.setState(prevState => {
         let newEvents = prevState.events.concat(message.data)
@@ -21,9 +22,9 @@ class EventSourceHOC extends React.Component {
     this.props.types.forEach(type => {
       this.source.addEventListener(type, cb, false);
     });
-    this.source.onerror = function (e) {
-      console.log('EventSource::onerror: ', e);
-    };
+    if (this.props.onEventSourceError) {
+      this.source.onerror = this.props.onEventSourceError;
+    }
   }
   componentWillUnmount() {
     this.source.close();
@@ -33,13 +34,15 @@ class EventSourceHOC extends React.Component {
   }
 }
 
-EventSource.propTypes = {
-  url: React.PropTypes.string.isRequired,
-  types: React.PropTypes.array,
-  children: React.PropTypes.func.isRequired
+EventSourceHOC.propTypes = {
+  url: propIsRequiredIf(PropTypes.string, props => !props.hasOwnProperty('source')),
+  source: propIsRequiredIf(PropTypes.object, props => !props.hasOwnProperty('url')),
+  onEventSourceError: PropTypes.func,
+  types: PropTypes.array,
+  children: PropTypes.func.isRequired
 };
 
-EventSource.defaultProps = {
+EventSourceHOC.defaultProps = {
   types: ['message']
 };
 
