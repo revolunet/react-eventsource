@@ -1,12 +1,14 @@
-import React from 'react';
+import React from 'react'
+import {render} from 'react-dom'
+import GithubCorner from 'react-github-corner';
 
-import EventSource from '../src';
-
+import ReactEventSource from '../../src';
 
 const Entry = ({ title = 'BTC value', value }) => <div>{ title } : { value }</div>;
 
 const BTCVolume = () => {
-  return (<EventSource types={ ['data', 'patch'] } url="https://proxy.streamdata.io/https://api.bitcoinaverage.com/ticker/global/EUR/">
+  return (
+    <ReactEventSource types={ ['data', 'patch'] } url="https://proxy.streamdata.io/https://api.bitcoinaverage.com/ticker/global/EUR/">
     { events => {
       if (!events.length) {
         return <div />
@@ -33,19 +35,34 @@ const BTCVolume = () => {
         }) }
       </div>);
     } }
-  </EventSource>);
+  </ReactEventSource>
+  );
 };
 
 const Demo = () => {
   const style = {
     padding: 20
   }
-  return (<div style={ style }>
-            <h3>Real-time BTC value</h3>
-            <p>This example use <a href="https://api.bitcoinaverage.com/ticker/global/EUR">api.bitcoinaverage.com</a> with <a href="http://streamdata.io">streamdata.io</a> for proxying</p>
-            <p>You could use any ServerEvent source in this component. Wait a while to see the updates</p>
-            <p>See this example code on <a href="https://github.com/revolunet/react-eventsource/tree/docs/Demo.js">github</a></p>
-            <BTCVolume />
-          </div>)
+  return (
+    <div>
+      <GithubCorner
+        href={`https://github.com/revolunet/event-source`}
+        bannerColor="#fff"
+        octoColor="#000"
+        width={80}
+        height={80}
+        direction="right"
+      />
+      <div style={ style }>
+        <h3>Real-time BTC value</h3>
+        <p>This example use <a href="https://api.bitcoinaverage.com/ticker/global/EUR">api.bitcoinaverage.com</a> with <a href="http://streamdata.io">streamdata.io</a> for proxying</p>
+        <p>You could use any ServerEvent source in this component. Wait a while to see the updates</p>
+        <p>See this example code on <a href="https://github.com/revolunet/react-eventsource/tree/docs/Demo.js">github</a></p>
+        <BTCVolume />
+      </div>
+    </div>
+  )
 }
-export default Demo;
+
+
+render(<Demo/>, document.getElementById('demo'));
