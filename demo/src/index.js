@@ -46,7 +46,7 @@ const Demo = () => {
   return (
     <div>
       <GithubCorner
-        href={`https://github.com/revolunet/event-source`}
+        href={`https://github.com/revolunet/react-eventsource`}
         bannerColor="#fff"
         octoColor="#000"
         width={80}
