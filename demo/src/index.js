@@ -47,17 +47,17 @@ const Demo = () => {
     <div>
       <GithubCorner
         href={`https://github.com/revolunet/react-eventsource`}
-        bannerColor="#fff"
-        octoColor="#000"
+        bannerColor="#000"
+        octoColor="#fff"
         width={80}
         height={80}
         direction="right"
       />
       <div style={ style }>
-        <h3>Real-time BTC value</h3>
+        <h3>Real-time BTC value using an EventSource</h3>
         <p>This example use <a href="https://api.bitcoinaverage.com/ticker/global/EUR">api.bitcoinaverage.com</a> with <a href="http://streamdata.io">streamdata.io</a> for proxying</p>
-        <p>You could use any ServerEvent source in this component. Wait a while to see the updates</p>
-        <p>See this example code on <a href="https://github.com/revolunet/react-eventsource/tree/docs/Demo.js">github</a></p>
+        <p>Wait a while to see the updates</p>
+        <p>See this example code on <a href="https://github.com/revolunet/react-eventsource/blob/master/demo/src/index.js">github</a></p>
         <BTCVolume />
       </div>
     </div>
