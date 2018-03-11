@@ -9,10 +9,7 @@ import ReactEventSource from 'react-eventsource'
 
 const renderEvent = event => <div>{ event }</div>
 
-<ReactEventSource
-  url="https://proxy.streamdata.io/https://api.bitcoinaverage.com/ticker/global/EUR/"
-  onEventSourceError={console.log}
->
+<ReactEventSource url="https://stream.wikimedia.org/v2/stream/recentchange">
     { events => events.map(renderEvent) }
 </ReactEventSource>
 ```
